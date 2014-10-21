@@ -2,6 +2,13 @@
 
 document.getElementById('addCard').addEventListener('submit',addCard,false);
 
+model.init(function(card){
+	UI.create(card,addDeleteEvent);
+});
+
+function addDeleteEvent(deleteButton){
+	deleteButton.addEventListener('click',deleteCard,false);
+}
 
 function addCard(e){
 	e.preventDefault();
@@ -9,7 +16,6 @@ function addCard(e){
 	var date=document.querySelector("input[name='date']").value; 
 	if(!name){return;}
 	var cardDate=!date?new Date().getTime():new Date(date).getTime();
-	
 	var card={
 		title:name,
 		date:cardDate
@@ -17,7 +23,7 @@ function addCard(e){
 	
 	//record in localStorage
 	model.record(card,function(){
-		UI.create(card);
+		UI.create(card,addDeleteEvent);
 	});
 }
 

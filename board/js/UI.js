@@ -2,7 +2,7 @@
 
 var UI={
 	
-	create : function(card){
+	create : function(card,callback){
 		
 		var div=document.createElement('div');
 		div.classList.add('card');
@@ -28,7 +28,7 @@ var UI={
 		var board=document.getElementById('board');
 		board.appendChild(div);
 		//add event on deleteButton in the creation context
-		deleteButton.addEventListener('click',deleteCard,false);
+		callback.call(this,deleteButton);
 	},
 	
 	remove : function(self){
