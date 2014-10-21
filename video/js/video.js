@@ -4,9 +4,8 @@ var video=document.getElementById('video');
 var button=document.getElementById('button');
 var progressBar=document.getElementById('progressBar');
 var autoPlayed=false;//on créé une variable d'état à false
-var volumePlus=document.querySelector('.plus');
-var volumeMoins=document.querySelector('.moins');
-
+var volume=document.querySelectorAll('.volume'); 
+ 
 video.load();
 button.classList.add('loading');
 
@@ -15,8 +14,11 @@ window.addEventListener('keypress',playPause,false);
 video.addEventListener('canplaythrough',autoPlay,false);
 video.addEventListener('timeupdate',progress,false);
 progressBar.addEventListener('click',setVideoTime,false);
-volumePlus.addEventListener('click',setMoreVolume,false);
-volumeMoins.addEventListener('click',setLessVolume,false);
+for (var i=0;i<volume.length;i++){
+	volume[i].addEventListener('click',setVolume,false);
+}
+
+
 
 
 function autoPlay(e){
@@ -53,30 +55,27 @@ function setVideoTime (e){
 	video.currentTime=time;
 }
 
-function setMoreVolume(e){
+function setVolume(e){
 	e.stopPropagation();
-	if(volumeMoins.classList.contains('off')){
-		volumeMoins.classList.remove('off');
+	var off=document.querySelector('.volume.off'),limit=false;
+	if(off)
+		off.classList.remove('off');
+	switch(e.currentTarget.getAttribute('data-role')){
+		case '+':
+			if(video.volume<1)
+				video.volume+=0.1;	
+			else
+				limit=true;
+		break;
+		case '-':
+			if(video.volume>0.1)
+				video.volume-=0.1;
+			else
+				limit=true;	
 	}
-	if(video.volume<1){
-		video.volume+=0.1;
-	}	
-	else{
+	if(limit)
 		this.classList.add('off');
-	}
-}
-
-function setLessVolume(e) {
-	e.stopPropagation();
-	if(volumePlus.classList.contains('off')){
-		volumePlus.classList.remove('off');
-	}
-	if(video.volume>0.1){
-		video.volume-=0.1;
-	}
-	else{
-		this.classList.add('off');
-	}
+	console.log(video.volume); 
 	
 }
 
