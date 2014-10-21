@@ -4,7 +4,7 @@ var video=document.getElementById('video');
 var button=document.getElementById('button');
 var progressBar=document.getElementById('progressBar');
 var autoPlayed=false;//on créé une variable d'état à false
-var volume=document.querySelectorAll('.volume'); 
+var volume=document.querySelectorAll('.volume');
  
 video.load();
 button.classList.add('loading');
@@ -14,7 +14,8 @@ window.addEventListener('keypress',playPause,false);
 video.addEventListener('canplaythrough',autoPlay,false);
 video.addEventListener('timeupdate',progress,false);
 progressBar.addEventListener('click',setVideoTime,false);
-for (var i=0;i<volume.length;i++){
+var v=volume.length;
+for (var i=0;i<v;i++){
 	volume[i].addEventListener('click',setVolume,false);
 }
 
@@ -60,7 +61,7 @@ function setVolume(e){
 	var off=document.querySelector('.volume.off'),limit=false;
 	if(off)
 		off.classList.remove('off');
-	switch(e.currentTarget.getAttribute('data-role')){
+	switch(this.getAttribute('data-role')){
 		case '+':
 			if(video.volume<1)
 				video.volume+=0.1;	
@@ -74,9 +75,7 @@ function setVolume(e){
 				limit=true;	
 	}
 	if(limit)
-		this.classList.add('off');
-	console.log(video.volume); 
-	
+		this.classList.add('off');	
 }
 
 
