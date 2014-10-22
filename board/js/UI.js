@@ -42,8 +42,8 @@ var UI={
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			center: centered
 		};
-		new google.maps.Map(document.querySelector('#map > div'),settings);
-		callback.call(this);
+		var map=new google.maps.Map(document.querySelector('#map > div'),settings);
+		callback.call(this,map);
 	},
 	
 	toggleMap : function(){
