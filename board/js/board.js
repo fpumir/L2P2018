@@ -45,8 +45,7 @@ function addLocation(e){
 	e.preventDefault();
 	UI.toggleLoader();
 	model.getUserLocation(function(userPosition){
-		 UI.drawMap(userPosition,function(map){
-				mapObject=map;
+		 UI.drawMap(userPosition,function(){
 				UI.toggleMap().toggleLoader();
 		});
 	});
@@ -57,14 +56,13 @@ function geoCoder(e){
 	e.preventDefault();
 	var address=document.querySelector("input[name='address']").value;
 	if(!address){return;}
-	var geocoder = new google.maps.Geocoder();
-	geocoder.geocode({"address":address},function(data,status){
-		if(status=='OK'){
-			var latLng=data[0].geometry.location; 
-			new google.maps.Marker({position: latLng,map: mapObject});
-			mapObject.panTo(latLng);
-		}
+	model.getGeocode(address,function(latLng){
+		UI.setMarker(latLng).center(latLng);
 	});
+	
+			
+			
+
 	
 	
 	

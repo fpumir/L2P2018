@@ -2,6 +2,7 @@
 
 var UI={
 	
+	
 	create : function(card,callback){
 		
 		var div=document.createElement('div');
@@ -42,8 +43,9 @@ var UI={
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			center: centered
 		};
-		var map=new google.maps.Map(document.querySelector('#map > div'),settings);
-		callback.call(this,map);
+		this.map=new google.maps.Map(document.querySelector('#map > div'),settings);
+		callback.call(this);
+	 
 	},
 	
 	toggleMap : function(){
@@ -53,6 +55,16 @@ var UI={
 	
 	toggleLoader : function(){
 		document.querySelector('.loader').classList.toggle('on');
+		return this;
+	},
+	
+	setMarker : function(latLng){
+		new google.maps.Marker({position: latLng,map: this.map});
+		return this;
+	},
+	
+	center : function(latLng){
+		this.map.panTo(latLng);
 		return this;
 	}
 	
