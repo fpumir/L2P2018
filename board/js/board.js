@@ -42,6 +42,7 @@ function deleteCard(e){
 
 function addLocation(e){
 	e.preventDefault();
+	toggleLoader();
 	var userPosition={};
 	navigator.geolocation.getCurrentPosition(
 		function(position){
@@ -67,6 +68,12 @@ function drawMap(userPosition){
 	};
 	new google.maps.Map(document.querySelector('#map > div'),settings);
 	document.getElementById('map').classList.add('on');
+	toggleLoader();
+}
+
+function toggleLoader(){
+	document.querySelector('.loader').classList.toggle('on');
+	
 }
 
 
