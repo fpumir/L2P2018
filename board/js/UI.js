@@ -33,6 +33,27 @@ var UI={
 	
 	remove : function(self){
 		self.parentNode.remove();
+	},
+	
+	drawMap : function(userPosition,callback){
+		var centered=new google.maps.LatLng(userPosition.lat,userPosition.lng);
+		var settings={
+			zoom: 17,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			center: centered
+		};
+		new google.maps.Map(document.querySelector('#map > div'),settings);
+		callback.call(this);
+	},
+	
+	toggleMap : function(){
+		document.getElementById('map').classList.toggle('on');
+		return this;
+	},
+	
+	toggleLoader : function(){
+		document.querySelector('.loader').classList.toggle('on');
+		return this;
 	}
 	
 }

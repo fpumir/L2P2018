@@ -19,6 +19,23 @@ var model={
 		if(!localStorage.getItem(key)){
 			callback.call(this);
 		}
+	},
+	
+	getUserLocation : function(callback){
+		var userPosition={};
+		navigator.geolocation.getCurrentPosition(
+			function(position){
+				userPosition.lat=position.coords.latitude;
+				userPosition.lng=position.coords.longitude;
+				callback.call(this,userPosition);
+			},
+			function(){ 
+				userPosition.lat=48.857713;
+				userPosition.lng=2.347271;
+				callback.call(this,userPosition);
+			},
+			{enableHighAccuracy:true}
+		);
 	}
 	
 }
