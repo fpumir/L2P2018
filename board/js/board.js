@@ -1,6 +1,9 @@
 "use strict";
 
 document.getElementById('addCard').addEventListener('submit',addCard,false);
+document.getElementById('addLocation').addEventListener('click',addLocation,false);
+
+
 
 model.init(function(card){
 	UI.create(card,addDeleteEvent);
@@ -20,7 +23,6 @@ function addCard(e){
 		title:name,
 		date:cardDate
 	};
-	
 	//record in localStorage
 	model.record(card,function(){
 		UI.create(card,addDeleteEvent);
@@ -37,6 +39,37 @@ function deleteCard(e){
 		});
 	}
 }
+
+function addLocation(e){
+	e.preventDefault();
+	var userPosition={};
+	navigator.geolocation.getCurrentPosition(
+		function(position){
+			userPosition.lat=position.coords.latitude;
+			userPosition.lng=position.coords.longitude;
+			drawMap(userPosition);
+		},
+		function(){ 
+			userPosition.lat=48.857713;
+			userPosition.lng=2.347271;
+			drawMap(userPosition);
+		},
+		{enableHighAccuracy:true}
+	); 
+}
+
+function drawMap(userPosition){
+	var centered=new google.maps.LatLng(userPosition.lat,userPosition.lng);
+	var settings={
+		zoom: 17,
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		center: centered
+	};
+	new google.maps.Map(document.querySelector('#map > div'),settings);
+	document.getElementById('map').classList.add('on');
+}
+
+
 
 
 
